@@ -1,0 +1,219 @@
+CLASE PRINCIPAL:
+package application;
+	
+import javafx.application.Application;
+import javafx.event.EventHandler;
+import javafx.stage.Stage;
+import javafx.scene.Group;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Line;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontPosture;
+import javafx.scene.text.FontWeight;
+import javafx.scene.text.Text;
+import javafx.scene.text.TextAlignment;
+
+public class Main extends Application {
+	@Override
+	public void start(Stage primaryStage) {
+			
+			Group root = new Group();
+			Scene scene = new Scene(root,700,700);
+
+			Text b=new Text(130,350,"BURST THE BUBBLES");
+			Text a=new Text(30,190,"Proyecto Programacion I");
+			
+			a.setFont(new Font(40));
+			a.setTextAlignment(TextAlignment.CENTER);
+			root.getChildren().addAll(a);
+			
+			b.setFont(new Font(50));
+			b.setTextAlignment(TextAlignment.CENTER);
+			root.getChildren().addAll(b);
+			
+			for (int i=0;i<=700;i=i+5)
+			{
+				Line linea=new Line(0,i,i,700);
+				root.getChildren().addAll(linea);
+				linea.setStroke(Color.BURLYWOOD);
+			}
+			for (int i=0;i<=700;i=i+5)
+			{
+				Line linea=new Line(700,i,i,0);
+				root.getChildren().addAll(linea);
+				linea.setStroke(Color.CORNFLOWERBLUE);
+			}
+			for (int i=0;i<=700;i=i+5)
+			{
+				Line linea=new Line(700,i,i,700);
+				root.getChildren().addAll(linea);
+				linea.setStroke(Color.CADETBLUE);
+			}
+			for (int i=0;i<=700;i=i+5)
+			{
+				Line linea=new Line(0,i,i,0);
+				root.getChildren().addAll(linea);
+				linea.setStroke(Color.KHAKI);
+			}
+			
+			Button botonA=new Button("Creditos");
+			botonA.setFont(Font.font("verdana",FontWeight.NORMAL,FontPosture.REGULAR,20));
+			botonA.setLayoutX(50);
+			botonA.setLayoutY(500);
+			root.getChildren().addAll(botonA);
+			botonA.setOnMouseClicked(new EventHandler<javafx.scene.input.MouseEvent>()
+			
+					{
+						@Override
+						public void handle(MouseEvent event) {
+							// TODO Auto-generated method stub
+							
+							Creditos c1=new Creditos();
+							c1.MostrarEscenario(primaryStage);	
+						}
+					}
+			);
+			
+			/*Button botonC=new Button("JUGAR");
+			botonC.setFont(Font.font("verdana",FontWeight.NORMAL,FontPosture.REGULAR,30));
+			botonC.setLayoutX(300);
+			botonC.setLayoutY(200);
+			root.getChildren().addAll(botonA);
+			botonC.setOnMouseClicked(new EventHandler<javafx.scene.input.MouseEvent>()
+			
+					{
+						@Override
+						public void handle(MouseEvent event) {
+							// TODO Auto-generated method stub
+							
+							 Juego J=new Juego();
+							 J.Jugar();
+						}
+					}
+			);*/
+			Button botonB=new Button("Instrucciones");
+			botonB.setFont(Font.font("verdana",FontWeight.NORMAL,FontPosture.REGULAR,20));
+			botonB.setLayoutX(500);
+			botonB.setLayoutY(500);
+			root.getChildren().addAll(botonB);
+			botonB.setOnMouseClicked(new EventHandler<javafx.scene.input.MouseEvent>()
+				{
+						@Override
+				public void handle(MouseEvent event) {
+							// TODO Auto-generated method stub
+							
+							Instrucciones i1=new Instrucciones();
+							i1.MostrarInstrucciones(primaryStage);
+						}
+					}
+			);
+			
+			Button botonSalir=new Button("Salir");
+			botonSalir.setFont(Font.font("verdana",FontWeight.NORMAL,FontPosture.REGULAR,20));
+			botonSalir.setLayoutX(300);
+			botonSalir.setLayoutY(500);
+			root.getChildren().addAll(botonSalir);
+			
+			botonSalir.setOnMouseClicked(new EventHandler<javafx.scene.input.MouseEvent>()
+			{
+				@Override
+				public void handle(javafx.scene.input.MouseEvent l) 
+				{
+					// TODO Auto-generated method stub
+					
+					System.exit(0);	
+				}
+			}
+	);
+			primaryStage.setScene(scene);
+			primaryStage.show();
+		}
+ 
+	public static void main(String[] args) {
+		launch(args);
+	}
+}
+
+
+
+CLASE INSTRUCCIONES:
+package application;
+
+import javafx.event.EventHandler;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.Pane;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontPosture;
+import javafx.scene.text.FontWeight;
+import javafx.stage.Stage;
+
+public class Instrucciones {
+
+	public void MostrarInstrucciones(Stage StageI) {
+		// TODO Auto-generated method stub
+		Pane root=new Pane();
+		Scene scene=new Scene(root,700,700);
+		Image Inst=new Image("file:///c:/Mov/instrucciones.png");
+		ImageView MI=new ImageView();
+		MI.setImage(Inst);
+		MI.setFitHeight(700);
+		MI.setFitWidth(700);
+	
+		root.getChildren().addAll(MI);
+		StageI.setScene(scene);
+		StageI.show();
+	}
+}
+
+
+CLASE CREDITOS:
+package application;
+ 
+import javafx.scene.Scene;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.Pane;
+import javafx.stage.Stage;
+
+public class Creditos {
+
+	public void  MostrarEscenario(Stage StageC) {
+		// TODO Auto-generated method stub
+		
+		Pane root=new Pane();
+		Scene scene=new Scene(root,700,700);
+		
+		Image Creditos=new Image("file:///c:/Mov/Sp.png");
+		ImageView MC=new ImageView();
+		MC.setImage(Creditos);
+		MC.setFitHeight(700);
+		MC.setFitWidth(700);
+
+		root.getChildren().addAll(MC);
+		StageC.setScene(scene);
+		StageC.show();
+	}
+}
+
+
+CLASE JUEGO:
+package application;
+
+public class Juego {
+
+	public void Jugar() {
+		// TODO Auto-generated method stub
+		
+		System.out.println("EN DESARROLLOOOOOOOOOOOOOOOOOOOOOOOOOOOOO");
+		
+	}
+
+}
+
