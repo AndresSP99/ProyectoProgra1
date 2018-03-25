@@ -1,0 +1,959 @@
+
+package application;
+	
+import javafx.application.Application;
+import javafx.stage.Stage;
+import javafx.scene.Scene;
+
+public class Main extends Application {
+	
+	public static PantallaPrincipal principal= new PantallaPrincipal();  
+	public static Juego escenaJuego= new Juego();
+	
+	@Override
+	public void start(Stage primaryStage) {
+		
+			Scene scene = new Scene(principal,700,700);
+			
+			principal.MostrarPantallaPrincipal();
+				
+			primaryStage.setScene(scene);
+			primaryStage.show();
+		
+	}
+	
+	public static void main(String[] args) {
+		launch(args);
+	}
+}
+package application;
+
+import javafx.event.EventHandler;
+import javafx.scene.Group;
+import javafx.scene.control.Button;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Line;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontPosture;
+import javafx.scene.text.FontWeight;
+import javafx.scene.text.Text;
+import javafx.scene.text.TextAlignment;
+
+public class PantallaPrincipal extends Group {
+
+	public void MostrarPantallaPrincipal() {
+		
+		getChildren().clear();
+		
+		Text NombrePrograma = new Text(15, 190, "Proyecto \n Programación I: ");
+		Text NombreJuego = new Text(130, 350, "BURST THE BUBBLES");
+		
+		NombreJuego.setFont(new Font(50));
+		NombrePrograma.setFont(new Font (40));
+		
+		NombreJuego.setTextAlignment(TextAlignment.CENTER);
+		NombrePrograma.setTextAlignment(TextAlignment.CENTER);
+
+		
+
+		for (int i = 0; i <= 700; i = i + 5) {
+			Line linea = new Line(0, i, i, 700);
+			linea.setStroke(Color.RED);
+
+			getChildren().addAll(linea);
+		}
+		for (int i = 0; i <= 700; i = i + 5) {
+			Line linea = new Line(700, i, i, 0);
+			linea.setStroke(Color.ORANGE);
+
+			getChildren().addAll(linea);
+		}
+		for (int i = 0; i <= 700; i = i + 5) {
+			Line linea = new Line(700, i, i, 700);
+			linea.setStroke(Color.YELLOW);
+
+			getChildren().addAll(linea);
+		}
+		for (int i = 0; i <= 700; i = i + 5) {
+			Line linea = new Line(0, i, i, 0);
+			linea.setStroke(Color.PINK);
+
+			getChildren().addAll(linea);
+		}
+		
+		
+
+		Button botonIngresar = new Button("INGRESAR AL JUEGO");
+		botonIngresar.setFont(Font.font("verdana", FontWeight.NORMAL,FontPosture.REGULAR,30));
+		botonIngresar.setLayoutX(300);
+		botonIngresar.setLayoutY(400);
+		
+
+		botonIngresar.setOnMouseClicked(new EventHandler<javafx.scene.input.MouseEvent>() {
+
+			@Override
+
+			public void handle(MouseEvent event) {
+
+				// TODO Auto-generated method stub
+				
+				CargarOtraEscena(Main.escenaJuego);
+				Main.escenaJuego.ComenzarJuego();
+				Main.escenaJuego.inicializarTimerTiempo();
+				Main.escenaJuego.inicializarTimer();
+				
+				// j1.MostrarEscenario(primaryStage);
+			}
+		});
+
+		Button botonCreditos = new Button("CREDITOS");
+		botonCreditos.setFont(Font.font("verdana", FontWeight.NORMAL,FontPosture.REGULAR,20));
+		botonCreditos.setLayoutX(50);
+		botonCreditos.setLayoutY(500);
+
+		botonCreditos.setOnMouseClicked(new EventHandler<javafx.scene.input.MouseEvent>() {
+
+			@Override
+
+			public void handle(MouseEvent event) {
+
+				Creditos creditos = new Creditos();
+				
+				CargarOtraEscena(creditos);
+				
+				creditos.MostrarCreditos();
+			}
+		});
+
+		Button botonInstrucciones = new Button("INSTRUCCIONES");
+		botonInstrucciones.setFont(Font.font("verdana", FontWeight.NORMAL,FontPosture.REGULAR,20));
+		botonInstrucciones.setLayoutX(500);
+		botonInstrucciones.setLayoutY(500);
+
+		botonInstrucciones.setOnMouseClicked(new EventHandler<javafx.scene.input.MouseEvent>() {
+
+			@Override
+
+			public void handle(MouseEvent event) {
+
+				// TODO Auto-generated method stub
+				Instrucciones instrucciones = new Instrucciones();
+				
+				CargarOtraEscena(instrucciones);
+				
+				instrucciones.MostrarInstrucciones();
+				
+				// i1.MostrarEscenario(primaryStage);
+			}
+		});
+		
+		Button botonSalir= new Button("SALIR");
+		botonSalir.setFont(Font.font("verdana", FontWeight.NORMAL,FontPosture.REGULAR,20));
+		botonSalir.setLayoutX(300);
+		botonSalir.setLayoutY(500);
+		
+		botonSalir.setOnMouseClicked(new EventHandler<javafx.scene.input.MouseEvent>()
+		{
+	
+			public void handle (MouseEvent event)
+			{
+				System.exit(0);
+		
+			}
+		});
+				
+	
+		getChildren().addAll(NombreJuego, NombrePrograma, botonIngresar, botonCreditos, botonInstrucciones,botonSalir);
+	}
+	
+	public void CargarOtraEscena(Group escena)
+	{
+		getChildren().clear();
+		getChildren().add(escena);
+	}
+}
+package application;
+
+import javafx.event.EventHandler;
+import javafx.scene.Group;
+import javafx.scene.control.Button;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
+
+public class Instrucciones extends Group {
+	
+	public void MostrarInstrucciones()
+	{
+		Image instrucciones= new Image("Imagenes\\instrucciones.png.png");
+		
+		Button botonVolver = new Button("VOLVER AL MENU");
+		botonVolver.setLayoutX(250);
+		botonVolver.setLayoutY(600);
+		
+		
+		
+		botonVolver.setOnMouseClicked(new EventHandler<javafx.scene.input.MouseEvent>() {
+
+			@Override
+
+			public void handle(MouseEvent event) {
+				Main.principal.MostrarPantallaPrincipal();
+			}
+		});
+		
+		ImageView mostrarinst= new ImageView();
+		mostrarinst.setImage(instrucciones);
+		mostrarinst.setFitWidth(700);
+		mostrarinst.setFitHeight(700);
+		
+		getChildren().addAll(mostrarinst, botonVolver);
+
+		
+		
+	}
+
+}
+package application;
+
+import javafx.event.EventHandler;
+import javafx.scene.Group;
+import javafx.scene.control.Button;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
+ 
+
+public class Creditos extends Group{
+	
+	public void MostrarCreditos()
+	{
+		Image creditos= new Image("Imagenes\\creditos.png.png");
+	
+		
+		Button botonVolver = new Button("VOLVER AL MENU");
+		botonVolver.setLayoutX(250);
+		botonVolver.setLayoutY(600);
+		botonVolver.setOnMouseClicked(new EventHandler<javafx.scene.input.MouseEvent>() {
+
+			@Override
+
+			public void handle(MouseEvent event) {
+				Main.principal.MostrarPantallaPrincipal();
+			}
+		});
+		
+		ImageView mostrarcreditos= new ImageView();
+		mostrarcreditos.setImage(creditos);
+		mostrarcreditos.setFitWidth(700);
+		mostrarcreditos.setFitHeight(700);
+		
+		getChildren().addAll(mostrarcreditos,botonVolver);
+	}
+
+}
+ackage application;
+
+import java.util.ArrayList;
+import java.util.Timer;
+import java.util.TimerTask;
+import javafx.application.Platform;
+import javafx.event.EventHandler;
+import javafx.scene.Group;
+import javafx.scene.Node;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
+ 
+ 
+import javafx.scene.text.Font;
+ 
+
+public class Juego extends Group {
+	
+	Arco arco= new Arco(300,500);
+	
+	int puntaje=0;
+	int tiempo=60;
+	
+	Image fondo= new Image("Imagenes\\Fondo.jpg");
+	Image fondoplomo= new Image("Imagenes\\FondoBotones.jpg");
+	
+	Label LabelTextoPuntaje= new Label();
+	Label LabelTextoTiempo= new Label();
+	
+	Label LabelPuntaje= new Label();
+	Label LabelTiempo= new Label();
+	
+	boolean enEjecucion= false;
+	
+	
+	ArrayList<Pelota> pelotas= new ArrayList<>();
+	
+	int [] PosiblesPuntajes = new int [] {10,20,30,40,50,60,70,80,90,100};
+	
+	public Juego()
+	{
+		
+		 ImageView imagenfondo= new ImageView(fondo);
+		 imagenfondo.setX(0);
+		 imagenfondo.setY(0);
+		 imagenfondo.setLayoutY(100);
+		 imagenfondo.setFitWidth(700);	
+		 imagenfondo.setFitHeight(700);
+		 imagenfondo.setImage(fondo);
+		 getChildren().addAll(imagenfondo);
+		 setTranslateY(100);
+		 setLayoutX(0);
+		 setLayoutY(0);
+		
+		ImageView fondoTextos= new ImageView();
+		fondoTextos.setX(0);
+		fondoTextos.setY(0);
+		fondoTextos.setFitHeight(100);
+		fondoTextos.setFitWidth(700);
+		fondoTextos.setImage(fondoplomo);
+		getChildren().add(fondoTextos);
+		
+		Button botonVolver= new Button("VOLVER");
+		botonVolver.setOnMouseClicked(new EventHandler<javafx.scene.input.MouseEvent> () {
+
+			@Override
+			public void handle(MouseEvent event) {
+				// TODO Auto-generated method stub
+				Main.principal.MostrarPantallaPrincipal();
+			}	
+		});
+		
+		botonVolver.setTranslateX(0);
+		botonVolver.setTranslateY(0);
+		botonVolver.setLayoutX(350);
+		botonVolver.setLayoutY(50);
+		
+		getChildren().add(botonVolver);
+		
+		
+		getChildren().addAll(arco);
+		
+		setOnKeyPressed( new EventHandler<KeyEvent>() {
+
+			@Override
+			public void handle(KeyEvent event) {
+				// TODO Auto-generated method stub
+				
+				switch ( event.getCode()) {
+				
+				case RIGHT:
+					arco.CambiarDireccion(1);
+					break;
+					
+				case LEFT:
+					arco.CambiarDireccion(-1);
+					break;
+					
+				case UP:
+				arco.Disparar();
+					break;
+					default:
+						break;
+						
+				}
+			}
+		});
+		
+			setOnKeyReleased(new EventHandler<KeyEvent>() {
+
+			@Override
+			public void handle(KeyEvent event) {
+				// TODO Auto-generated method stub
+				
+				if (event.getCode()== KeyCode.RIGHT || event.getCode()== KeyCode.LEFT)
+					arco.CambiarDireccion(0);
+				
+			}	
+		
+		});
+		
+		LabelTextoPuntaje.setLayoutX(10);
+		LabelTextoPuntaje.setLayoutY(10);
+		LabelTextoPuntaje.setFont(new Font(20));
+		LabelTextoPuntaje.setText("Puntaje: ");
+		getChildren().add(LabelTextoPuntaje);
+		
+		LabelPuntaje.setLayoutX(90);
+		LabelPuntaje.setLayoutY(10);
+		getChildren().add(LabelPuntaje);
+		
+		LabelTextoTiempo.setText("Tiempo Restante: ");
+		LabelTextoTiempo.setLayoutX(350);
+		LabelTextoTiempo.setLayoutY(10);
+		LabelTextoTiempo.setFont( new Font(20));
+		getChildren().add(LabelTextoTiempo);
+		
+	}
+	
+	public void ComenzarJuego()
+	{
+
+	Timer timer = new Timer();
+	TimerTask task = new TimerTask() {
+		public void run() {
+			Platform.runLater(new Runnable() {
+				@Override
+				public void run() {
+					tiempo--;
+					if(tiempo <= 0) {
+						timer.cancel();
+						Alert alerta = new Alert(AlertType.INFORMATION);
+						alerta.setTitle("Tiempo terminado");
+						alerta.setHeaderText("GAME OVER");
+						alerta.setContentText("JUEGO TERMINADO:\n TU PUNTUACION ES: "+puntaje + "\n" + "NUMERO DE GLOBOS PERDIDOS: ");
+						alerta.showAndWait();
+						Main.principal.MostrarPantallaPrincipal();
+					}
+					else
+						LabelTiempo.setText(tiempo + "");
+				}
+			});
+		}
+	};
+	timer.schedule(task, 1000, 1000);
+}
+
+
+		public void inicializarTimerTiempo() {
+
+			
+			LabelTextoTiempo.setText("Tiempo Restante: ");
+			LabelTextoTiempo.setLayoutX(350);
+			LabelTextoTiempo.setLayoutY(10);
+			LabelTextoTiempo.setFont(new Font(20));
+		    getChildren().add(LabelTextoTiempo);
+
+			LabelTiempo = new Label();
+			LabelTiempo.setLayoutX(LabelTextoTiempo.getLayoutX() + 160);
+			LabelTiempo.setLayoutY(10);
+			LabelTiempo.setText(tiempo + "");
+			LabelTiempo.setFont(new Font(20));
+			getChildren().add(LabelTiempo);
+			Timer timer = new Timer();
+			TimerTask task = new TimerTask() {
+				public void run() {
+					Platform.runLater(new Runnable() {
+						@Override
+						public void run() {
+							tiempo--;
+							if(tiempo <= 0) {
+								timer.cancel();
+								Alert alerta = new Alert(AlertType.INFORMATION);
+								alerta.setTitle("Tiempo terminado");
+								alerta.setHeaderText("GAME OVER");
+								alerta.setContentText("JUEGO TERMINADO:\n TU PUNTUACION ES: "+puntaje + "\n" + "NUMERO DE GLOBOS PERDIDOS: ");
+								alerta.showAndWait();
+								Main.principal.MostrarPantallaPrincipal();
+							}
+							else
+								LabelTiempo.setText(tiempo + "");
+						}
+					});
+				}
+			};
+			timer.schedule(task, 1000, 1000);
+		}
+		
+			
+			
+		public void inicializarTimer() {
+
+			Timer timer = new Timer();
+			TimerTask task = new TimerTask() {
+				public void run() {
+					Platform.runLater(new Runnable() {
+						@Override
+						public void run() {
+							if (pelotas.size() > 0) {
+								ArrayList<Pelota> eliminar = new ArrayList<>();
+								for (int i = 0; i < pelotas.size(); i++) {
+									if (arco.chocaConFlecha(pelotas.get(i)) == true) {
+										pelotas.get(i).Eliminar();
+										eliminar.add(pelotas.get(i));
+									}
+								}
+								for (int i = 0; i < eliminar.size(); i++) {
+									pelotas.remove(eliminar.get(i));
+								}
+							}
+						}
+					});
+				}
+			};
+			timer.schedule(task, 0, 10);
+		}
+
+		public void SumarPuntaje(int puntos) {
+			puntaje += puntos;
+			LabelPuntaje.setText(puntaje + "");
+		}
+
+		public void Eliminar(Node nodo) {
+			getChildren().remove(nodo);
+		}
+
+		public void Dibujar(Node nodo) {
+			getChildren().add(nodo);
+		}
+	}
+ package application;
+
+import java.util.ArrayList;
+import java.util.Timer;
+import java.util.TimerTask;
+
+import javafx.application.Platform;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+
+public class Arco extends ImageView {
+
+	private Image imagen;
+	private int direccion = 0;
+	private ArrayList<Flecha> flechas;
+	
+
+	public Arco(double x, double y) {
+		flechas = new ArrayList<Flecha>();
+		imagen = new Image("Imagenes\\Arco.png");
+		setX(0);
+		setY(0);
+		setLayoutX(x);
+		setLayoutY(y);
+		setImage(imagen);
+		setFitWidth(100);
+		setFitHeight(106);
+
+		Timer timer = new Timer();
+		TimerTask task = new TimerTask() {
+			public void run() {
+				Platform.runLater(new Runnable() {
+					@Override
+					public void run() {
+						if(Math.abs(getRotate() + (5 * direccion)) <= 80){
+							setRotate(getRotate() + (5 * direccion) );
+						}
+					}
+				});
+			}
+		};
+		timer.schedule(task, 0, 10);
+	}
+
+	public void CambiarDireccion(int dir) {
+		direccion = dir;
+	}
+
+	public void Disparar() {
+		if(flechas.size() < 1){
+			Flecha flecha = new Flecha(getLayoutX(), getLayoutY(), getRotate());
+			flechas.add(flecha);
+			Main.escenaJuego.Dibujar(flecha);
+		}
+		//ManejadorDeEscenas.DibujarEnEscena(bala);
+	}
+
+	public boolean chocaConFlecha(Pelota pelota) {
+		boolean existe = false;
+		if (flechas.size() > 0) {
+			ArrayList<Flecha> eliminar = new ArrayList<Flecha>();
+			for (int i=0;i<flechas.size();i++) {
+				if (flechas.get(i).Eliminada() == true) {
+					eliminar.add(flechas.get(i));
+				} else if (pelota.existeChoque(flechas.get(i)) == true) {
+					flechas.get(i).Eliminar();
+					eliminar.add(flechas.get(i));
+					existe = true;
+				}
+			}
+			for (int i=0;i<eliminar.size();i++)
+				flechas.remove(eliminar.get(i));
+		}
+		return existe;
+	}
+
+}
+package application;
+
+import java.util.Timer;
+import java.util.TimerTask;
+import javafx.application.Platform;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+
+public class Flecha extends ImageView {
+
+	private Image imagen;
+	private boolean eliminado;
+	private double angulo;
+	private Flecha instancia;
+	
+	public Flecha(double x, double y, double ang) {
+		instancia = this;
+		angulo = ang;
+		eliminado = false;
+		setX(0);
+		setY(0);
+		setFitWidth(20);
+		setFitHeight(102);
+		setLayoutX(x + (100 / 2) - (getFitWidth() / 2));
+		setLayoutY(y);
+		setRotate(ang);
+		imagen = new Image("Imagenes\\Flecha.png");
+		setImage(imagen);
+		
+		Timer timer = new Timer();
+		TimerTask task = new TimerTask() {
+			public void run() {
+				Platform.runLater(new Runnable() {
+					@Override
+					public void run() {
+						setLayoutY(getLayoutY() - 5 * Math.cos(Math.toRadians(angulo)));
+						setLayoutX(getLayoutX() + 5 * Math.sin(Math.toRadians(angulo)));
+						
+						if(getLayoutX() <= 0 || (getLayoutX() + getFitWidth()) >= 700){
+							angulo *= -1;
+							setRotate(angulo);
+						}
+						
+						boolean dentroDePanel = getLayoutY() > -50 && eliminado == false;
+						if(dentroDePanel == false){
+							eliminado = true;
+							Main.escenaJuego.Eliminar(instancia);
+							timer.cancel();
+							//ManejadorDeEscenas.Eliminar(this);
+						}
+					}
+				});
+			}
+		};
+		timer.schedule(task, 0, 5);
+	}
+	
+	public double getPuntoMedioX(){
+		return getLayoutX() + (getFitWidth() / 2);
+	}
+	
+	public double getPuntoMedioY(){
+		return getLayoutY() + (getFitHeight());
+	}
+	
+	public void Eliminar(){
+		eliminado = true;
+	}
+	
+	public boolean Eliminada(){
+		return eliminado;
+	}
+}package application;
+
+import java.util.Random;
+import java.util.Timer;
+import java.util.TimerTask;
+import javafx.animation.PathTransition;
+import javafx.application.Platform;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
+import javafx.util.Duration;
+
+public class Pelota extends Circle {
+
+	private int puntos;
+	private Pelota instancia;
+	private Color color;
+	private boolean eliminado = false;
+	private Timer timer;
+	
+	public static int TIEMPO_MAXIMO_BAJADA = 50;
+	public static int MAXIMO_RADIO = 30;
+	
+	public Pelota(double x, double y, int puntos) {
+		super(0, 0, new Random(System.currentTimeMillis()).nextInt(MAXIMO_RADIO - 20) + 20);
+		instancia = this;
+		
+		Random rand = new Random(System.currentTimeMillis());
+		PathTransition ptr = new PathTransition();
+		ptr.setDuration(Duration.seconds(rand.nextInt(5) + 3));
+		ptr.setDelay(Duration.seconds(0));
+		ptr.setPath(new Circle(0, 0, rand.nextInt(10) + 10));
+		ptr.setNode(instancia);
+		ptr.setCycleCount(Integer.MAX_VALUE);
+		ptr.setAutoReverse(rand.nextBoolean());
+		ptr.play();
+		
+		this.puntos = puntos;
+		color = Color.BLACK;
+		switch(puntos){
+		case 10:
+			color = Color.RED;
+			break;
+		case 20:
+			color = Color.AQUA;
+			break;
+		case 30:
+			color = Color.BLACK;
+			break;
+		case 50:
+			color = Color.BLUE;
+			break;
+		case 60:
+			color = Color.BROWN;
+			break;
+		case 70:
+			color = Color.CORAL;
+			break;
+		case 80:
+			color = Color.GREENYELLOW;
+			break;
+		case 90:
+			color = Color.YELLOW;
+			break;
+		case 100:
+			color = Color.INDIGO;
+			break;
+		}
+		setFill(color);
+		setLayoutX(x);
+		setLayoutY(y);
+		timer = new Timer();
+		TimerTask task = new TimerTask() {
+			public void run() {
+				Platform.runLater(new Runnable() {
+					@Override
+					public void run() {
+						if(getLayoutY() > (700 - 100) && eliminado== false){
+							eliminado = true;
+							Main.escenaJuego.Eliminar(instancia);
+							
+							timer.cancel();
+						}
+						setLayoutY(getLayoutY() + 1);
+					}
+				});
+			}
+		};
+		timer.schedule(task, 0, rand.nextInt(TIEMPO_MAXIMO_BAJADA - 20) + 20);
+	}
+	
+	public boolean existeChoque(Flecha flecha){
+		boolean existe = false;
+		if(Math.abs(flecha.getPuntoMedioX() - getLayoutX()) < getRadius() + (flecha.getFitWidth() / 2)){
+			if(Math.abs(flecha.getPuntoMedioY() - getLayoutY()) < getRadius() + (flecha.getFitHeight() / 2)){
+				existe = true;
+			}
+		}
+		return existe;
+	}
+	
+	public void Eliminar(){
+		eliminado = true;
+		timer.cancel();
+		Main.escenaJuego.Dibujar(new TextoPuntaje(getLayoutX() - getRadius(), getLayoutY() - getRadius(), puntos + "", color));
+		Main.escenaJuego.SumarPuntaje(puntos);
+		Main.escenaJuego.Eliminar(this);
+		//ManejadorDeEscenas.Eliminar(this);
+	}
+}
+package application;
+
+import java.util.Timer;
+import java.util.TimerTask;
+
+import javafx.application.Platform;
+import javafx.scene.control.Label;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+
+public class TextoPuntaje extends Label {
+
+	private TextoPuntaje instancia;
+	
+	public TextoPuntaje(double x, double y, String texto, Color color) {
+		instancia = this;
+		setLayoutX(x);
+		setLayoutY(y);
+		setWidth(100);
+		setHeight(100);
+		setText(texto);
+		setFont(new Font(50));
+		setTextFill(color);
+		Timer timer = new Timer();
+		TimerTask task = new TimerTask() {
+			public void run() {
+				Platform.runLater(new Runnable() {
+					@Override
+					public void run() {
+						Main.escenaJuego.Eliminar(instancia);
+						timer.cancel();
+					}
+				});
+			}
+		};
+		timer.schedule(task, 1000);
+	}
+
+}
+
+package application;
+
+import java.util.Random;
+import java.util.Timer;
+import java.util.TimerTask;
+import javafx.animation.PathTransition;
+import javafx.application.Platform;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
+import javafx.util.Duration;
+
+public class Pelota extends Circle {
+
+	private int puntos;
+	private Pelota instancia;
+	private Color color;
+	private boolean eliminado = false;
+	private Timer timer;
+	
+	public static int TIEMPO_MAXIMO_BAJADA = 50;
+	public static int MAXIMO_RADIO = 30;
+	
+	public Pelota(double x, double y, int puntos) {
+		super(0, 0, new Random(System.currentTimeMillis()).nextInt(MAXIMO_RADIO - 20) + 20);
+		instancia = this;
+		
+		Random rand = new Random(System.currentTimeMillis());
+		PathTransition ptr = new PathTransition();
+		ptr.setDuration(Duration.seconds(rand.nextInt(5) + 3));
+		ptr.setDelay(Duration.seconds(0));
+		ptr.setPath(new Circle(0, 0, rand.nextInt(10) + 10));
+		ptr.setNode(instancia);
+		ptr.setCycleCount(Integer.MAX_VALUE);
+		ptr.setAutoReverse(rand.nextBoolean());
+		ptr.play();
+		
+		this.puntos = puntos;
+		color = Color.BLACK;
+		switch(puntos){
+		case 10:
+			color = Color.RED;
+			break;
+		case 20:
+			color = Color.AQUA;
+			break;
+		case 30:
+			color = Color.BLACK;
+			break;
+		case 50:
+			color = Color.BLUE;
+			break;
+		case 60:
+			color = Color.BROWN;
+			break;
+		case 70:
+			color = Color.CORAL;
+			break;
+		case 80:
+			color = Color.GREENYELLOW;
+			break;
+		case 90:
+			color = Color.YELLOW;
+			break;
+		case 100:
+			color = Color.INDIGO;
+			break;
+		}
+		setFill(color);
+		setLayoutX(x);
+		setLayoutY(y);
+		timer = new Timer();
+		TimerTask task = new TimerTask() {
+			public void run() {
+				Platform.runLater(new Runnable() {
+					@Override
+					public void run() {
+						if(getLayoutY() > (700 - 100) && eliminado== false){
+							eliminado = true;
+							Main.escenaJuego.Eliminar(instancia);
+							
+							timer.cancel();
+						}
+						setLayoutY(getLayoutY() + 1);
+					}
+				});
+			}
+		};
+		timer.schedule(task, 0, rand.nextInt(TIEMPO_MAXIMO_BAJADA - 20) + 20);
+	}
+	
+	public boolean existeChoque(Flecha flecha){
+		boolean existe = false;
+		if(Math.abs(flecha.getPuntoMedioX() - getLayoutX()) < getRadius() + (flecha.getFitWidth() / 2)){
+			if(Math.abs(flecha.getPuntoMedioY() - getLayoutY()) < getRadius() + (flecha.getFitHeight() / 2)){
+				existe = true;
+			}
+		}
+		return existe;
+	}
+	
+	public void Eliminar(){
+		eliminado = true;
+		timer.cancel();
+		Main.escenaJuego.Dibujar(new TextoPuntaje(getLayoutX() - getRadius(), getLayoutY() - getRadius(), puntos + "", color));
+		Main.escenaJuego.SumarPuntaje(puntos);
+		Main.escenaJuego.Eliminar(this);
+		//ManejadorDeEscenas.Eliminar(this);
+	}
+}
+package application;
+
+import java.util.Timer;
+import java.util.TimerTask;
+
+import javafx.application.Platform;
+import javafx.scene.control.Label;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+
+public class TextoPuntaje extends Label {
+
+	private TextoPuntaje instancia;
+	
+	public TextoPuntaje(double x, double y, String texto, Color color) {
+		instancia = this;
+		setLayoutX(x);
+		setLayoutY(y);
+		setWidth(100);
+		setHeight(100);
+		setText(texto);
+		setFont(new Font(50));
+		setTextFill(color);
+		Timer timer = new Timer();
+		TimerTask task = new TimerTask() {
+			public void run() {
+				Platform.runLater(new Runnable() {
+					@Override
+					public void run() {
+						Main.escenaJuego.Eliminar(instancia);
+						timer.cancel();
+					}
+				});
+			}
+		};
+		timer.schedule(task, 1000);
+	}
+
+}
+
